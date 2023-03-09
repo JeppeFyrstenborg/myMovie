@@ -4,7 +4,7 @@
 
 import Foundation
 
-class MovieViewModel: ObservableObject{
+class MovieController: ObservableObject{
     @Published var movieList = [Movie]()
     @Published var sortType = SortType.title{
         didSet {

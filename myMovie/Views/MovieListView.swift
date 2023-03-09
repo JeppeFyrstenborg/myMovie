@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MovieListView: View {
     @State var isAuthenticated = false
-    @EnvironmentObject var movieViewModel: MovieViewModel
+    @EnvironmentObject var movieViewModel: MovieController
     @State private var showAddView = false
     
     var body: some View {
@@ -60,6 +60,6 @@ struct MovieListView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieListView().environmentObject(MovieViewModel())
+        MovieListView().environmentObject(MovieController())
     }
 }

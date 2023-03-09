@@ -16,23 +16,6 @@ struct MovieCell: View {
     var body: some View{
 //        if isAuthorized{
             HStack(content: {
-//                Image(movie.title)
-//                    .resizable()
-//                    .scaledToFit()
-//                //                .aspectRatio(contentMode: .fit)
-//                    .frame(height: 100)
-//                    .cornerRadius(18)
-//                    .padding(.trailing)
-//                if let url = movie.url{
-//                    URLImage(url: url) {
-//                        $0.image?
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(height: 100)
-//                            .cornerRadius(18)
-//                            .padding(.trailing)
-//                    }
-//                }
                 AsyncImage(url: movie.url) { image in
                     image
                         .resizable()

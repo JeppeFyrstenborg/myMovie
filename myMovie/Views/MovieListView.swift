@@ -9,19 +9,20 @@ import SwiftUI
 
 struct MovieListView: View {
     @State var isAuthenticated = false
-    @EnvironmentObject var movieViewModel: MovieController
+    @EnvironmentObject var movieController: MovieController
+    @EnvironmentObject var navigationController: NavigationController
     @State private var showAddView = false
     
     var body: some View {
-        NavigationStack(path: $movieViewModel.moviePath){
+        NavigationStack(path: $navigationController.moviePath){
                 List{
-                    ForEach(movieViewModel.movieList) { movie in
+                    ForEach(movieController.movieList, id: \.self) { movie in
                         NavigationLink(value: movie) {
                             MovieCell(movie: movie)
                         }
                     }
                     .onDelete{ indexSet in
-                        movieViewModel.movieList.remove(atOffsets: indexSet)
+                        movieController.deleteMovieFromDbWith(indexSet: indexSet)
                     }
                     .listRowSeparator(.hidden)
                 }//list end
@@ -49,8 +50,8 @@ struct MovieListView: View {
                 AddMovieView()
             }
 //                HStack(alignment: .bottom){
-            Text("AVG Rating: " + String(format: "%.2f", movieViewModel.CalcAverageRating()))
-                        SortButton(viewModel: movieViewModel)
+            Text("AVG Rating: " + String(format: "%.2f", movieController.CalcAverageRating()))
+                        SortButton()
 //                    }
 //                .padding(.top)
         }//NavigationView end
@@ -60,6 +61,6 @@ struct MovieListView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieListView().environmentObject(MovieController())
+        MovieListView().environmentObject(MovieController()).environmentObject(NavigationController())
     }
 }

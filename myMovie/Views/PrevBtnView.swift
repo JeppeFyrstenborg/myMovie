@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct PrevBtnView: View {
-    @EnvironmentObject var movieViewModel: MovieViewModel
+    @EnvironmentObject var navigationController: NavigationController
     var clickable: Bool
     
     var movie: Movie
     
     var body: some View {
         Button {
-            movieViewModel.MoveToThisPath(nxtMovie: movie)
+            navigationController.MoveToThis(nxtMovie: movie)
         } label: {
             Image(systemName: "arrowshape.left.fill")
                 .resizable()
@@ -26,8 +26,8 @@ struct PrevBtnView: View {
     }
 }
 
-//struct PrevBtnView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PrevBtnView().environmentObject(NavigationController())
-//    }
-//}
+struct PrevBtnView_Previews: PreviewProvider {
+    static var previews: some View {
+        PrevBtnView(clickable: true, movie: Movie(title: "The Matrix", year: "1999", rating: 8.7, resume: "The Matrix is a science fiction action movie about a hacker named Neo who discovers that the reality he lives in is actually a simulated world created by sentient machines. He joins a group of rebels who fight against the machines and try to save humanity from being trapped in the Matrix.", urlString: "https://www.imdb.com/title/tt0133093/mediaviewer/rm525547776/?ref_=tt_ov_i")).environmentObject(NavigationController())
+    }
+}

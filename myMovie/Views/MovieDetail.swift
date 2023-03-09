@@ -6,7 +6,8 @@
 import SwiftUI
 
 struct MovieDetail: View {
-    @EnvironmentObject var movieViewModel: MovieViewModel
+    @EnvironmentObject var movieController: MovieController
+    @EnvironmentObject var navigationController: NavigationController
     var movie : Movie
     @State private var tapped = false
     @State var angle = Angle(degrees: 0.0)
@@ -60,8 +61,14 @@ struct MovieDetail: View {
                     dragOffset = value.translation
                 }
                 .onEnded { value in
-                    let direction = value.translation.width > 0 ? 1 : -1
-                    movieViewModel.MoveBySwipeInThis(direction: direction, movie: movie)
+                    let currIndex = movieController.IndexOfThis(movie: movie)
+                    let direc = value.translation.width > 0 ? 1 : -1
+                    if direc == 1, let prev = movieController.CheckForPrevMovieWith(currIndex: currIndex){
+                        navigationController.MoveToThis(nxtMovie: prev)
+                    }
+                    if direc == -1,  let nxt = movieController.CheckForNxtMovieWith(currIndex: currIndex){
+                        navigationController.MoveToThis(nxtMovie: nxt)
+                    }
                     dragOffset = .zero
                 }
         )
@@ -72,5 +79,6 @@ struct MovieDetail: View {
 //struct MovieDetail_Previews: PreviewProvider {
 //    static var previews: some View {
 //        MovieDetail(movie: Movie(title: "The Matrix", year: "1999", rating: 8.7, resume: "The Matrix is a science fiction action movie about a hacker named Neo who discovers that the reality he lives in is actually a simulated world created by sentient machines. He joins a group of rebels who fight against the machines and try to save humanity from being trapped in the Matrix."))
+//            .environmentObject(MovieController()).environmentObject(NavigationController())
 //    }
 //}

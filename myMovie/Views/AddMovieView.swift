@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct AddMovieView: View {
-    @EnvironmentObject var movieViewModel: MovieViewModel
+    @EnvironmentObject var movieController: MovieController
     @State var title = ""
     @State var year = String(Calendar.current.component(.year, from: Date()))
-    @State var rating: Double = 0.00
+    @State var rating: Double = 0.0
     @State var resume = ""
+    @State var urlString = ""
     var years = (1900...Calendar.current.component(.year, from: Date())).reversed().map { String($0) }
     @State var isShowingAlert = false
     
@@ -33,7 +34,7 @@ struct AddMovieView: View {
                     
                 }
                     Section(header: Text("Rating")) {
-                        Slider(value: $rating, in: 0.00...10.00, step: 0.01)
+                        Slider(value: $rating, in: 0.00...10.00, step: 0.1)
                         Text(String(format: "%.2f", rating))
                     }
                 Section(header: Text("Resumé")){
@@ -41,9 +42,15 @@ struct AddMovieView: View {
 
                     
                 }
+                DisclosureGroup {
+                    TextField("Https....", text: $urlString)
+                } label: {
+                    Text("Type in URL")
+                        .opacity(0.6)
+                }
                     Button {
                         isShowingAlert = true
-                        movieViewModel.AddMovieToListWith(title: title, year: year, rating: rating, resume: resume)
+                        movieController.addMovieToDbWith(title: title, year: year, rating: rating, resume: resume, urlString: urlString)
                     } label: {
                         HStack {
                             Spacer()
@@ -69,6 +76,6 @@ struct AddMovieView: View {
 
 struct AddMovieView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMovieView().environmentObject(MovieViewModel())
+        AddMovieView().environmentObject(MovieController())
     }
 }

@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SortButton: View {
-    @ObservedObject var viewModel: MovieViewModel
+    @EnvironmentObject var movieController: MovieController
     
     var sortTypes: [SortType] = [.title, .year, .rating]
     
     var body: some View {
         
         HStack {
-            Picker("", selection: $viewModel.sortType) {
+            Picker("", selection: $movieController.sortType) {
     //            Image(systemName: "arrow.up.arrow.down")
                 ForEach(SortType.allCases, id: \.self) { sortType in
                     Text("Sort by \(sortType.toString)").tag(sortType)
@@ -30,6 +30,6 @@ struct SortButton: View {
 struct SortButton_Previews: PreviewProvider {
 
     static var previews: some View {
-                SortButton(viewModel: MovieViewModel())
+        SortButton().environmentObject(MovieController())
     }
 }

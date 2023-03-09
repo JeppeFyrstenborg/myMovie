@@ -3,14 +3,21 @@
 //  myMovie
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct myMovieApp: App {
-    @StateObject private var movieViewModel = MovieViewModel()
+    init() {
+        FirebaseApp.configure()
+    }
+    
+    
+    @StateObject private var movieController = MovieController()
+    @StateObject private var navigationController = NavigationController()
     
     var body: some Scene {
         WindowGroup {
-            MovieListView().environmentObject(movieViewModel)
+            MovieListView().environmentObject(movieController).environmentObject(navigationController)
         }
     }
 }

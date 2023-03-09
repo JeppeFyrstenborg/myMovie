@@ -23,6 +23,7 @@ struct NxtBtnView: View {
                 .frame(width: 50)
         }
         .disabled(!clickable)
+        
     }
 }
 
